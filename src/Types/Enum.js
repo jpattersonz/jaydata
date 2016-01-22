@@ -33,6 +33,10 @@ $data.Enum = $data.Class.define("$data.Enum", null, null, {
             return { get: function() { return value }, set: function() { }, enumMember: true, index: index }
         }
         
+        var getEnumInverseDef = function(name, index){
+            return { get: function() { return name }, set: function() { }, enumMember: true, index: index }
+        }
+        
         var defaultValue = 0;
         var isValueCalculation = [$data.Byte, $data.SByte, $data.Int16, $data.Integer, $data.Int64].indexOf(enumType) >= 0;
         var hasIndex = false;
@@ -88,6 +92,7 @@ $data.Enum = $data.Class.define("$data.Enum", null, null, {
             defaultValue++;
             enumOptions.push(enumVal.name);
             classDefinition[enumVal.name] = getEnumDef(enumVal.value, enumVal.index);
+            classDefinition[enumVal.value] = getEnumInverseDef(enumVal.name, enumVal.index);
         }
         
         var enumClass = $data.Base.extend.call(this, name, container, {}, classDefinition);
